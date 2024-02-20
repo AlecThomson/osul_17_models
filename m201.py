@@ -80,7 +80,7 @@ for i in range(terms):
         latex_label=fr"$\phi_{i}$ (rad m$^{{-2}}$)",
     )
 if terms > 1:
-    for i in range(terms):
+    for i in range(terms-1):
         priors[f"delta_RM{i}_{i+1}_radm2"] = Constraint(
             minimum=0,
             maximum=1100.0/terms,
