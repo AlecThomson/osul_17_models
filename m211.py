@@ -84,7 +84,7 @@ for i in range(terms):
     priors[f"Delta_{i}_RM"] = bilby.prior.Uniform(
         minimum=0,
         maximum=1100.0,
-        name=f"delta_{i}_RM",
+        name=f"Delta_{i}_RM",
         latex_label=fr"$\Delta\phi_{i}$ (rad m$^{{-2}}$)",
     )
 
