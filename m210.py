@@ -62,7 +62,7 @@ terms = 1
 priors = PriorDict(conversion_function=partial(converter, nterms=terms))
 for i in range(terms):
     priors[f"fracPol{i+1}"] = bilby.prior.Uniform(
-        minimum=0.001,
+        minimum=0.0,
         maximum=1.0,
         name=f"fracPol{i+1}",
         latex_label=r"$p_1$",
@@ -97,7 +97,7 @@ if terms > 1:
             latex_label=fr"$\Delta\phi_{i+1,i+2}$ (rad m$^{{-2}}$)",
         )
     priors["sum_p"+"_".join([f"{i+1}" for i in range(terms)])] = Constraint(
-        minimum=0.001,
+        minimum=0.0,
         maximum=1.0,
         name="sum_p"+"_".join([f"{i+1}" for i in range(terms)]),
         latex_label=r"$p" + r"p_".join([fr"{i+1}+" for i in range(terms)]) + r"$",
