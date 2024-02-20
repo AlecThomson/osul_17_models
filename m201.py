@@ -53,7 +53,7 @@ def converter(parameters, nterms):
         converted_parameters[f"delta_RM{i}_{i+1}_radm2"] = (
             parameters[f"RM_{i}_radm2"] - parameters[f"RM_{i+1}_radm2"]
         )
-        converted_parameters[f"sum_p{i}_{i+1}"] = parameters[f"fracPol_{i}"] + parameters[f"fracPol_{i+1}"]
+    converted_parameters["sum_p"+"_".join([f"{i}" for i in range(nterms)])] = np.sum([parameters[f"fracPol_{i}"] for i in range(nterms)])
     return converted_parameters
 
 terms = 2

@@ -55,7 +55,7 @@ def converter(parameters, nterms):
         converted_parameters[f"delta_RM{i}_{i+1}_radm2"] = (
             parameters[f"RM_{i}_radm2"] - parameters[f"RM_{i+1}_radm2"]
         )
-        converted_parameters[f"sum_p{i+1}_{i+2}"] = parameters[f"fracPol{i+1}"] + parameters[f"fracPol{i+2}"]
+    converted_parameters["sum_p"+"_".join([f"{i}" for i in range(nterms)])] = np.sum([parameters[f"fracPol_{i}"] for i in range(nterms)])
     return converted_parameters
 
 terms = 3
@@ -96,9 +96,9 @@ if terms > 1:
             name=f"delta_RM{i}_{i+1}_radm2",
             latex_label=fr"$\Delta\phi_{i,i+1}$ (rad m$^{{-2}}$)",
         )
-    priors["sum_p"+"_".join([f"{i+1}" for i in range(terms)])] = Constraint(
+    priors["sum_p"+"_".join([f"{i}" for i in range(terms)])] = Constraint(
         minimum=0.001,
         maximum=1.0,
-        name="sum_p"+"_".join([f"{i+1}" for i in range(terms)]),
-        latex_label=r"$p" + r"p_".join([fr"{i+1}+" for i in range(terms)]) + r"$",
+        name="sum_p"+"_".join([f"{i}" for i in range(terms)]),
+        latex_label=r"$p" + r"p_".join([fr"{i}+" for i in range(terms)]) + r"$",
     )
