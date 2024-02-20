@@ -63,7 +63,7 @@ for i in range(terms):
         minimum=0.0,
         maximum=1.0,
         name=f"fracPol_{i}",
-        latex_label=r"$p_1$",
+        latex_label=rf"$p_{i}$",
     )
     priors[f"psi0_{i}_deg"] = bilby.prior.Uniform(
         minimum=0,
