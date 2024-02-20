@@ -52,8 +52,8 @@ def converter(parameters, nterms):
     """
     converted_parameters = parameters.copy()
     for i in range(nterms-1):
-        converted_parameters[f"delta_RM{i+1}_{i+2}_radm2"] = (
-            parameters[f"RM{i+1}_radm2"] - parameters[f"RM{i+2}_radm2"]
+        converted_parameters[f"delta_RM{0}_{i+1}_radm2"] = (
+            parameters[f"RM_{0}_radm2"] - parameters[f"RM_{i+1}_radm2"]
         )
         converted_parameters[f"sum_p{i+1}_{i+2}"] = parameters[f"fracPol{i+1}"] + parameters[f"fracPol{i+2}"]
     return converted_parameters
