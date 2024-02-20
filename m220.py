@@ -52,34 +52,34 @@ def converter(parameters, nterms):
     """
     converted_parameters = parameters.copy()
     for i in range(nterms-1):
-        converted_parameters[f"delta_RM{i+1}_{i+2}_radm2"] = (
-            parameters[f"RM{i+1}_radm2"] - parameters[f"RM{i+2}_radm2"]
+        converted_parameters[f"delta_RM{i}_{i+1}_radm2"] = (
+            parameters[f"RM_{i}_radm2"] - parameters[f"RM_{i+1}_radm2"]
         )
-        converted_parameters[f"sum_p{i+1}_{i+2}"] = parameters[f"fracPol{i+1}"] + parameters[f"fracPol{i+2}"]
+        converted_parameters[f"sum_p{i}_{i+1}"] = parameters[f"fracPol_{i}"] + parameters[f"fracPol_{i+1}"]
     return converted_parameters
 
 terms = 1
 priors = PriorDict(conversion_function=partial(converter, nterms=terms))
 for i in range(terms):
-    priors[f"fracPol{i+1}"] = bilby.prior.Uniform(
+    priors[f"fracPol_{i}"] = bilby.prior.Uniform(
         minimum=0.0,
         maximum=1.0,
-        name=f"fracPol{i+1}",
+        name=f"fracPol_{i}",
         latex_label=r"$p_1$",
     )
-    priors[f"psi0{i+1}_deg"] = bilby.prior.Uniform(
+    priors[f"psi0_{i}_deg"] = bilby.prior.Uniform(
         minimum=0,
         maximum=180.0,
-        name=f"psi0{i+1}_deg",
-        latex_label=fr"$\psi_{{0,{i+1}}}$ (deg)",
+        name=f"psi0_{i}_deg",
+        latex_label=fr"$\psi_{{0,{i}}}$ (deg)",
         boundary="periodic",
     )
 
-    priors[f"RM{i+1}_radm2"] = bilby.prior.Uniform(
+    priors[f"RM_{i}_radm2"] = bilby.prior.Uniform(
         minimum=-1100.0,
         maximum=1100.0,
-        name=f"RM{i+1}_radm2",
-        latex_label=fr"$\phi_{i+1}$ (rad m$^{{-2}}$)",
+        name=f"RM_{i}_radm2",
+        latex_label=fr"$\phi_{i}$ (rad m$^{{-2}}$)",
     )
     priors[f"sigma_{i}_RM"] = bilby.prior.Uniform(
         minimum=0,
@@ -90,15 +90,15 @@ for i in range(terms):
 
 if terms > 1:
     for i in range(terms-1):
-        priors[f"delta_RM{i+1}_{i+2}_radm2"] = Constraint(
+        priors[f"delta_RM{i}_{i+1}_radm2"] = Constraint(
             minimum=0,
             maximum=1100.0/terms,
-            name=f"delta_RM{i+1}_{i+2}_radm2",
-            latex_label=fr"$\Delta\phi_{i+1,i+2}$ (rad m$^{{-2}}$)",
+            name=f"delta_RM{i}_{i+1}_radm2",
+            latex_label=fr"$\Delta\phi_{i,i+1}$ (rad m$^{{-2}}$)",
         )
-    priors["sum_p"+"_".join([f"{i+1}" for i in range(terms)])] = Constraint(
+    priors["sum_p"+"_".join([f"{i}" for i in range(terms)])] = Constraint(
         minimum=0.0,
         maximum=1.0,
-        name="sum_p"+"_".join([f"{i+1}" for i in range(terms)]),
-        latex_label=r"$p" + r"p_".join([fr"{i+1}+" for i in range(terms)]) + r"$",
+        name="sum_p"+"_".join([f"{i}" for i in range(terms)]),
+        latex_label=r"$p" + r"p_".join([fr"{i}+" for i in range(terms)]) + r"$",
     )
